@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style>
+  #visible{
+    visibility: hidden;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+<button id="addtask" class="mt-5 btn btn-success" onclick="func()" role="button">Add Items</button>
+<table class="table table-striped">
+<thead>
+<tr>
+<th>Item Name</th>
+<th>Price</th>
+<th>Select the Items</th>
+</tr>
+</thead>
+<tbody id="table"> </tbody>
+</table>
+</div>
+<div class="form-group mt-5 container" id="visible">
+  <label>Enter the Item Name</label>
+  <input id="additemname" type="text" class="form-control" placeholder="Item Name" value="">
+  <label>Enter the Price</label>
+  <input id="addprice" type="number" class="form-control" placeholder="Item Cost" value="">
+  <button onclick="addItemDetails()" class="mt-5 btn btn-info">Add</button>
+  </div>
+  <label style="font-size: 20px;">Total price of all the selected items:</label>
+  <output type="number" id="totalprice" style="font-size: 30px;">
+ <script>
+  var checkBoxId=1;
+function func(){
+  document.getElementById("visible").style.visibility="visible";
+}
+
+var totalPrice=0;
+function addItemDetails(){
+var itemName = document.getElementById("additemname");
+var itemPrice = document.getElementById("addprice");
+var table = document.getElementById("table");
+
+var row =table.insertRow(0);
+var cell1 =row.insertCell(0);
+cell1.innerHTML = itemName.value;
+
+var cell2 =row.insertCell(1);
+cell2.innerHTML = itemPrice.value;
+
+var cell3 =row.insertCell(2);
+var checkBox = document.createElement("input");
+checkBox.setAttribute("type", "checkbox");
+checkBox.setAttribute("id",checkBoxId);
+cell3.appendChild(checkBox);
+
+checkBoxId++;
+
+var I_price =itemPrice.value;
+var I_id;
+// console.log(typeof(I_price));
+
+checkBox.I_id = checkBoxId-1;
+// console.log(checkBoxId-1);
+checkBox.I_price = I_price;
+checkBox.onchange = function () {
+    var price = Number(this.I_price);
+    if(document.getElementById(this.I_id).checked){
+    totalPrice = totalPrice + price;
+    }
+    else{
+      totalPrice = totalPrice - price;
+    }
+    document.getElementById("totalprice").innerHTML =totalPrice;
+    }
+    document.getElementById("visible").style.visibility="hidden";
+    itemName.value="";
+    itemPrice.value="";
+}
+</script>
+</body>
+</html>
